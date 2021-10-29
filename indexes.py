@@ -15,20 +15,8 @@ with open("data/data.pkl", "rb") as f:
   data_dict = pickle.load(f)
 
 class Index:
-  """
-  A base class for different indexes.
-  The constructor expects a corpus dictionary with doc_id : [terms list] mapping
-  Query function returns a list of matching doc id's.
-
-  """
   def process_spell_errors(self, query):
-    """
-    Process the query string and replace spell errors with words from the
-    corpus / english dictionary.
-
-    query: A query string.
-
-    """
+   
     if config_params['spell_check']:
       split_query = query.split()
       result = []
@@ -54,16 +42,12 @@ class Index:
     pass
 
 class TFIDFIndex(Index):
-  index = defaultdict(lambda : defaultdict(int)) #index[term][docid] = tf(doc, term)
-  idf = defaultdict(set)    #idf[term] = idf(term)
+  index = defaultdict(lambda : defaultdict(int)) 
+  idf = defaultdict(set)    
   ndocs = 0
 
   def __init__(self, corpus_dictionary):
-    """__init__.
-     The constructor for TFIDF index
-    :param corpus_dictionary: A dictionary with doc_id : [term_list] mapping
-    """
-
+  
     self.ndocs = len(corpus_dictionary)
 
     #build the inverted index
@@ -76,10 +60,7 @@ class TFIDFIndex(Index):
       self.idf[term] = log10(self.ndocs/len(self.idf[term]) + 1e-10)
 
   def tfidf_score(self, tf, idf):
-    """tfidf_score. - Returns the TFIDF partial score based on the scheme.
-    :param tf: Term Frequency
-    :param idf: Inverse document frequency
-    """
+
     if config_params['tf_scheme'] == 1:
       tf_idf=tf*idf
     if config_params['tf_scheme'] == 2:
@@ -89,18 +70,15 @@ class TFIDFIndex(Index):
     return tf_idf
 
   def query(self, query_string):
-    """query the tfidf index  and return the list of matching doc IDs.
 
-    :param query_string: A query string
-    """
-    #returns a sorted list of docids, with decreasing cosine similarity
+
     query_string = self.process_spell_errors(query_string)
 
     query_terms = preprocess_sentence(query_string)
-    query_frequencies = Counter(query_terms) #query_term : frequency(query_term) in the query
+    query_frequencies = Counter(query_terms) 
 
-    dotproducts = defaultdict(int) #sum of dotproduct elements of tfidf of the query and the document
-    magnitude = defaultdict(int) #stores the magnitude of the document tfidf vector
+    dotproducts = defaultdict(int) 
+    magnitude = defaultdict(int) 
     query_magnitude = 0
 
     #calculate the cosine similarity for the docs
