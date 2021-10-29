@@ -32,23 +32,16 @@ stopword_set = set(stopwords.words('english'))
 
 
 def preprocess_sentence(w):
-  """
-  This function takes in the sentence and returns a list of words which are applied to various methods of preprocessing
-  Inputs:
-    w : The input sentence
-  Outputs:
-    preprocessed_sent : The preprocessed list of terms of the sentence.
-  """
+
   w = unicode_to_ascii(w.lower().strip())
 
-  # creating a space between a word and the punctuation following it
+
   w = re.sub(r"([?.!,¿])", r" \1 ", w)
   w = re.sub(r'[" "]+', " ", w)
   w=w.replace('.','')
   w=w.replace(',','')
   w=w.replace('!','')
 
-  # replacing everything with space except (a-z, A-Z, ".", "?", "!", ",")
   w = re.sub(r"[^a-zA-Z?.!,¿*1-9]+", " ", w)
   preprocessed_sent  = []
   w = w.strip()
@@ -83,15 +76,9 @@ def preprocess_sentence(w):
 
 
 def get_snippets():
-  """
-  This function generates the mappings of all snippets of the corpus, its terms and custom generated idss for the snippets and dumps them in a pickle file
-  """
-  #read the data
-  #mapping from uuid to row, doc pair
+
   rowdict = {}
-  #a dictionary that maps docid to its snippet
   rowsnip = {}
-  #a dictionary that maps a row to its term list
   rowterms = {}
   word_corpus = set()
 
