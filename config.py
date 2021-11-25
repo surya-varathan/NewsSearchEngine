@@ -11,6 +11,7 @@ config_params={
   "es_host" : "localhost",
   "es_port" : 9200
 }
+
 #preprocess_type : 1 is for stemming, 2 is for lemmatization , 3 is for none
 #stop-word removal : 1 is to do stop-word removal , 0 is to not do stop word removal
 #index : 1 is for tf-idf, 2 is for boolean query, 3 for Positional Index
