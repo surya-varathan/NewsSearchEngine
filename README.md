@@ -4,7 +4,11 @@ A search engine built on the static corpus of Environmental News NLP Dataset and
 ## File Structure
 preprocess.py :  This file preprocesses the data from the dataset and writes it to a binary that can be read and used by subsequent modules. 
 
-indexes.py : This file constructs the index for the corpus
+indexes.py : This file constructs the index for the corpus.
+
+config.py : This file holds the configuration details for the search engine.
+
+query.py : This file takes in the user query and based on the index mentioned in the config.py file, queries the respective index and returns the results.
 
 ## Contributors
 [Surya Varathan](github.com/surya-varathan)
